@@ -28,71 +28,65 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             // Brand Logo
-            Flexible(
-              child: InkWell(
-                onTap: () => context.go('/'),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: AppColors.accent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.directions_car_filled_rounded, color: Colors.white, size: 20),
+            InkWell(
+              onTap: () => context.go('/'),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: AppColors.accent,
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    const SizedBox(width: 8),
-                    const Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'AutoDealers',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
-                              letterSpacing: -0.5,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'LEAD GENERATION SAAS',
-                            style: TextStyle(
-                              fontSize: 7.5,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.accent,
-                              letterSpacing: 0.8,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
+                    child: const Icon(Icons.directions_car_filled_rounded, color: Colors.white, size: 20),
+                  ),
+                  const SizedBox(width: 8),
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'AutoDealers',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -0.5,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
-                ),
+                      Text(
+                        'LEAD GENERATION SAAS',
+                        style: TextStyle(
+                          fontSize: 7.5,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.accent,
+                          letterSpacing: 0.8,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
 
-            const SizedBox(width: 8),
-            const Spacer(),
-
-            // Desktop Navigation Links
-            if (isDesktop)
+            if (isDesktop) ...[
+              const Spacer(),
               Flexible(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       _navLink(context, 'Browse Cars', '/cars'),
                       _navLink(context, 'Verified Dealers', '/dealers'),
                       _navLink(context, 'Pricing', '/pricing'),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 8),
 
                       // 1. If Authenticated as Super Admin
                       if (auth.isAuthenticated && auth.isAdmin) ...[
@@ -139,14 +133,14 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                           onPressed: () => context.go('/login'),
                           child: const Text('Dealer Login', style: TextStyle(fontWeight: FontWeight.w600)),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 8),
                         // Primary Value Proposition CTA: "List Your Cars & Get More Enquiries"
                         ElevatedButton.icon(
                           onPressed: () => context.go('/register'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.orange,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
                           ),
                           icon: const Icon(Icons.bolt_rounded, size: 18),
                           label: const Text('List Cars & Get Enquiries'),
@@ -155,8 +149,9 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                 ),
-              )
-            else ...[
+              ),
+            ] else ...[
+              const Spacer(),
               // Mobile / Tablet Action Icons
               IconButton(
                 onPressed: () => context.push('/cars'),
@@ -177,7 +172,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _navLink(BuildContext context, String title, String route) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextButton(
         onPressed: () => context.go(route),
         child: Text(
